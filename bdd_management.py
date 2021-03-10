@@ -4,10 +4,7 @@ class ConnectionBDD_PG:
     def __init__(self):
         #, dbName, user, passwd, host
         #"Établissement de la connexion - Création du curseur"
-        try:
-            """ "dbname='postgres' user='cary_mck@bdd-elearning' host='bdd-elearning.postgres.database.azure.com' " + \
-            "port= 5432 password='sha1491CBA'" """
-            #docker run -it --rm postgres psql -h carina-bddscrapping.postgres.database.azure.com -U caryk6@carina-bddscrapping -p 5432 postgres
+        try:            
             
             host = "localhost"
             dbname = "postgres"

@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, jsonify
 
 from bdd_management import *
 
+
 app = Flask(__name__)
 
 bdd_connecte = ConnectionBDD_PG()
