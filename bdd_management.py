@@ -9,7 +9,7 @@ class ConnectionBDD_PG:
             host = "localhost"
             dbname = "postgres"
             user = "postgres"
-            password ='sha1491'
+            password ='cba1491EPINAY'
 
             conn_string = "host={0} user={1} dbname={2} password={3}".format(host, user, dbname, password)
             self.cnx  = psycopg2.connect(conn_string)

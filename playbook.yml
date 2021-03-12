@@ -1,0 +1,64 @@
+- name: Configure VM Ansible
+  hosts: carina-vm-ansible-exercice2
+  remote_user: caryk6
+  become: yes  #==> become devenir: il permet d executer les taches en mode sudo(administrateur)
+  become_method: sudo
+
+  tasks:
+    #instalation de pip3
+    - name: installation de pip3
+      apt:
+        name: python3-pip
+        state: latest
+        update_cache: true
+      become: true
+    
+    #installer tous les libreries postgreSQL  
+    - name: Install PostgreSQL
+      apt: name={{ item }} update_cache=true state=installed
+      with_items:
+        - postgresql
+        - postgresql-contrib
+        - libpq-dev
+        - python-psycopg2
+      tags: packages
+
+    # instalation des packages flask pour l'api et psycopg2 pour la gestion de la BDD Postgres
+    - name: Installation des packages python sur pip
+      pip:
+        name: 
+          - psycopg2
+          - Flask
+    #le meme task que l'anterieur mais pour pip3
+    - name: Installation des packages python sur pip3
+      pip:
+        name: 
+          - psycopg2-binary
+          - Flask
+        executable: pip3
+    
+    - name: Modification du mot de passe de postgres
+      become:  #==> devenir: il permet d executer les taches en mode sudo et changer d'utilisateur
+      become_method: sudo
+      become_user: postgres
+      postgresql_user: 
+        db: postgres
+        name: postgres
+        password: "cba1491EPINAY" 
+        
+    - name: Ensure the PostgreSQL service is running
+      service: name=postgresql state=started enabled=  #il execute un service, L'état souhaité du service ici c'est initialisé
+      #redemarre?
+    # il faut commenté quand la VM à deja tout installé
+
+    #Je veux copier le dossier ou se trouve mon ansible et tous mes fichier
+    - name: Copier le dossier de mon repertoire
+      synchronize:
+      #path ou se trouve mon playbook
+        src: "{{ playbook_dir }}" #variable special==> Chemin d'accès au répertoire du playbook
+      #path a la racine de ma VM
+        dest: ./
+    
+    #Lancer mon script qui met en place l'app flask      
+    - name: Execute script app.py
+      command: python3 ./ansible-exercice/app.py

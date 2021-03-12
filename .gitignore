@@ -1,2 +1,17 @@
 __pycache__/
+#SSH KEY
 caryk6-vm_ansible_exercice_key.pem
+#test
+playbook_copy.yml
+#Hosts ansible
+#.hosts
+hosts
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
